@@ -15,7 +15,8 @@ function Search() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    axios.get(`https://dog.ceo/api/breed/${search.toLowerCase()}/images/random`)
+    axios
+      .get(`https://dog.ceo/api/breed/${search.toLowerCase()}/images/random`)
       .then(res => {
         console.log(res);
         setDog({
@@ -24,7 +25,7 @@ function Search() {
         });
       })
       .catch(error => {
-        console.log("betkas", error.message);
+        console.log("error:", error.message);
         setDog({
           message: "Šuns veislė nerasta...",
           type: "error"
@@ -36,14 +37,26 @@ function Search() {
     <div>
       <h2>Search dogs</h2>
       <form onSubmit={handleSubmit}>
-        <div className="input-group mb-3 w-50 p-3">
-          <input type="text" className="form-control" placeholder="Please enter dog specie" onChange={handleChange} value={search} />
-          <button className="btn btn-primary" type="submit">
-            Search
-          </button>
-        </div>
+          <div className="input-group w-100 mb-2 p-2">
+            <input type="text" className="form-control" placeholder="Please enter dog specie..." onChange={handleChange} value={search} />
+          </div>
+          <div className="input-group w-25 mb-2 p-2">
+            <button className="btn btn-primary" type="submit">
+              Search
+            </button>
+          </div>
       </form>
-      <Dog specie={dog.message} />
+      {dog.type === "error" && (
+        <div className="error">
+          <p>Paieška negalima... </p>
+          <p>Bandykite įvesti kitą veislę</p>
+        </div>
+      )}
+      {dog.type === "success" && (
+        <div>
+          <Dog specie={dog.message} />
+        </div>
+      )}
     </div>
   );
 }

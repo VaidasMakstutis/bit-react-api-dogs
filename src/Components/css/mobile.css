@@ -1,0 +1,11 @@
+@media screen and (max-width: 480px) {
+  h2 {
+    margin: 15px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
